@@ -1,26 +1,26 @@
 import BoardHolder from "../../../domain/entity/models/BoardHolder";
 import MovementUseCase from "../../../domain/interactors/MovementUseCase";
+import BoardListener from "../../../domain/entity/models/BoardListener";
 
 import GameView from "../../view/Game";
 import Playable from "./Playable";
+import {BoardType} from "../../../types";
 
-import { BoardType } from "../../../types";
-
-export default class GameViewModel implements Playable {
+export default class GameViewModel implements Playable, BoardListener {
     public view?: GameView;
     public holder: BoardHolder;
     public movementUseCase: MovementUseCase;
-
-    public size: number;
-    public board: BoardType;
     public isAutomatic: boolean = true;
 
-    constructor(movementUseCase: MovementUseCase, holder: BoardHolder, isAutomatic: boolean = false, size: number = 8) {
+    constructor(movementUseCase: MovementUseCase, holder: BoardHolder, isAutomatic: boolean = false) {
         this.holder = holder;
         this.movementUseCase = movementUseCase;
-        this.size = size;
-        this.board = Array(size).fill(Array(size).fill(0));
         this.isAutomatic = isAutomatic;
+        this.holder.addListener(this);
+    }
+
+    onBoardChanged(): void {
+        throw new Error("Method not implemented.");
     }
 
     private notifyView = (): void => {
@@ -39,5 +39,9 @@ export default class GameViewModel implements Playable {
     onClick(): void {
         this.isAutomatic = !this.isAutomatic;
         this.notifyView();
+    }
+
+    getBoard(): BoardType {
+        return this.holder.board;
     }
 }

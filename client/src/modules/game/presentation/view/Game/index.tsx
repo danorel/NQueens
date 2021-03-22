@@ -2,12 +2,10 @@ import React from 'react';
 
 import { Grid } from "@material-ui/core";
 
-import BoardView from "./Board";
+import Board from "./Board";
 import GameViewModel from "../../view-model/Game";
 
 import { DivBackground, H3Title } from "./styles";
-
-import { BoardType } from "../../../types";
 
 export interface GameStateControllable {
     interact: () => void;
@@ -19,7 +17,6 @@ export interface GameProps {
 
 export interface GameState {
     isAutomatic: boolean,
-    board: BoardType
 }
 
 class GameView extends React.Component<GameProps, GameState> implements GameStateControllable {
@@ -29,7 +26,6 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
         super(props);
         this.viewModel = props.viewModel;
         this.state = {
-            board: this.viewModel.board,
             isAutomatic: this.viewModel.isAutomatic,
         }
     }
@@ -56,7 +52,7 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
                     <Grid item xs={12}>
                         <Grid container justify="center" spacing={0}>
                             <H3Title>The Great N-queens Game!</H3Title>
-                            <BoardView board={this.state.board}/>
+                            <Board board={this.viewModel.getBoard()}/>
                         </Grid>
                     </Grid>
                 </Grid>

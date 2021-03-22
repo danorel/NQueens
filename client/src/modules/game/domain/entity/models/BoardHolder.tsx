@@ -14,12 +14,12 @@ interface BoardChangingListener {
 }
 
 export default class BoardHolder implements BoardOperationsListener, BoardChangingListener {
-    private board: BoardType;
-    private listeners: BoardListener[];
+    private _board: BoardType;
+    private _listeners: BoardListener[];
 
     constructor() {
-        this.listeners = [];
-        this.board = [
+        this._listeners = [];
+        this._board = [
             [1, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 1, 0, 0, 0],
@@ -31,27 +31,31 @@ export default class BoardHolder implements BoardOperationsListener, BoardChangi
     }
 
     public clear(): void {
-        for (let i = 0; i < this.board.length; ++i) {
-            for (let j = 0; j < this.board.length; ++j) {
-                this.board[i][j] = 0;
+        for (let i = 0; i < this._board.length; ++i) {
+            for (let j = 0; j < this._board.length; ++j) {
+                this._board[i][j] = 0;
             }
         }
     }
 
     setQueen(i: number, j: number): void {
-        this.board[i][j] = 1;
+        this._board[i][j] = 1;
     }
 
     public addListener(listener: BoardListener): void {
-        this.listeners.push(listener);
+        this._listeners.push(listener);
     }
 
     public removeListener(listener: BoardListener): void {
-        this.listeners.splice(this.listeners.indexOf(listener), 1);
+        this._listeners.splice(this._listeners.indexOf(listener), 1);
     }
 
     public notifyAllListeners(): void {
-        this.listeners
+        this._listeners
             .forEach((listener) => listener.onBoardChanged());
+    }
+
+    get board(): BoardType {
+        return this._board;
     }
 }
