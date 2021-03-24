@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import jpgBackgroundImage from "../../../../../public/images/jpg/background-purple.jpg";
+import jpgBackgroundImage from "../../../../../public/images/jpg/background-matrix-simple.jpg";
 
 export const H3Title = styled.h3`
     font-size: 32px;

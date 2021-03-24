@@ -1,5 +1,7 @@
 import React from 'react';
 
+import srcBackground from '../../../../../public/videos/matrix.mp4';
+
 import { Grid } from "@material-ui/core";
 
 import Chat from "./Chat";
@@ -54,23 +56,26 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
     render() {
         return (<React.Fragment>
             <DivBackgroundContainer>
-                <Grid container spacing={0}>
-                    <Grid container item xs={12} sm={6}>
-                        <DivExpandingContainer>
-                            <DivCentrifyContainer>
-                                <Board board={this.viewModel.getBoard()}/>
-                            </DivCentrifyContainer>
-                        </DivExpandingContainer>
+                <video autoPlay loop muted>
+                    <source src={srcBackground} type="video/mp4"/>
+                    <Grid container spacing={0}>
+                        <Grid container item xs={12} sm={6}>
+                            <DivExpandingContainer>
+                                <DivCentrifyContainer>
+                                    <Board board={this.viewModel.getBoard()}/>
+                                </DivCentrifyContainer>
+                            </DivExpandingContainer>
+                        </Grid>
+                        <Grid container item xs={12} sm={6}>
+                            <DivExpandingContainer>
+                                <DivCentrifyContainer>
+                                    <H3Title>The Great N-queens Game!</H3Title>
+                                    <Chat value={this.viewModel.logs} onChange={this.viewModel.onChangeLogs}/>
+                                </DivCentrifyContainer>
+                            </DivExpandingContainer>
+                        </Grid>
                     </Grid>
-                    <Grid container item xs={12} sm={6}>
-                        <DivExpandingContainer>
-                            <DivCentrifyContainer>
-                                <H3Title>The Great N-queens Game!</H3Title>
-                                <Chat value={this.viewModel.logs} onChange={this.viewModel.onChangeLogs}/>
-                            </DivCentrifyContainer>
-                        </DivExpandingContainer>
-                    </Grid>
-                </Grid>
+                </video>
             </DivBackgroundContainer>
         </React.Fragment>);
     }
