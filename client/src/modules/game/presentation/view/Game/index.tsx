@@ -8,6 +8,7 @@ import GameViewModel from "../../view-model/Game";
 
 import {
     H3Title,
+    ButtonNext,
     ButtonRegime,
     DivExpandingContainer,
     DivCentrifyContainer,
@@ -72,19 +73,19 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
                                 <Grid container
                                       direction="column"
                                       justify="center"
-                                      alignItems="center"
+                                      alignItems="flex-start"
                                       spacing={1}>
                                     <Grid item>
                                         <H3Title>The Great N-queens Game!</H3Title>
                                         <Chat value={this.viewModel.logs} onChange={this.viewModel.onChangeLogs}/>
                                     </Grid>
-                                    <Grid item>
-                                        <ButtonRegime
-                                            onClick={this.viewModel.onClick}>
-                                            {this.viewModel.isAutomatic
-                                                ? "Automatic"
-                                                : "Manual"}
-                                        </ButtonRegime>
+                                    <Grid item>{this.viewModel.isAutomatic
+                                        ? <ButtonRegime type="button" onClick={(): void => this.viewModel.onClick()}>Automatic 👻</ButtonRegime>
+                                        : (<React.Fragment>
+                                            <ButtonRegime type="button" onClick={(): void => this.viewModel.onClick()}> Manual 🛠</ButtonRegime>
+                                            <ButtonNext type="button" onClick={(): void => this.viewModel.onClick()}>Next ➞</ButtonNext>
+                                        </React.Fragment>)}
+
                                     </Grid>
                                 </Grid>
                             </DivCentrifyContainer>
