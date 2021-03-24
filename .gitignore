@@ -379,5 +379,5 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/python,react,intellij,intellij+iml,intellij+all
 
-lib
-bin
+server/lib
+server/bin

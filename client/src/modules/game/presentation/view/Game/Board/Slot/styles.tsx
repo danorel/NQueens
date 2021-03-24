@@ -11,12 +11,12 @@ export const DivImage = styled.div`
   font-size: 1.5em;
   color: #000f00;
   margin: 1px;
-  border: 3px solid #e5e5e5;
+  border: 3px solid #69ff79;
 `;
 
 export const ImageQueen = styled.img`
   display: block;
   margin: auto;
-  width: 50px;
-  height: 50px;
+  width: 42px;
+  height: 42px;
 `;

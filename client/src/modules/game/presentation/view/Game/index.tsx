@@ -2,12 +2,18 @@ import React from 'react';
 
 import { Grid } from "@material-ui/core";
 
-import BoardView from "./Board";
+import Chat from "./Chat";
+import Board from "./Board";
 import GameViewModel from "../../view-model/Game";
 
-import { DivBackground, H3Title } from "./styles";
-
-import { BoardType } from "../../../types";
+import {
+    H3Title,
+    ButtonNext,
+    ButtonRegime,
+    DivExpandingContainer,
+    DivCentrifyContainer,
+    DivBackgroundContainer,
+} from "./styles";
 
 export interface GameStateControllable {
     interact: () => void;
@@ -19,7 +25,6 @@ export interface GameProps {
 
 export interface GameState {
     isAutomatic: boolean,
-    board: BoardType
 }
 
 class GameView extends React.Component<GameProps, GameState> implements GameStateControllable {
@@ -29,7 +34,6 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
         super(props);
         this.viewModel = props.viewModel;
         this.state = {
-            board: this.viewModel.board,
             isAutomatic: this.viewModel.isAutomatic,
         }
     }
@@ -51,16 +55,44 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
 
     render() {
         return (<React.Fragment>
-            <DivBackground>
+            <DivBackgroundContainer>
+                <video autoPlay loop muted>
+                    <source src={'videos/matrix.mp4'} type="video/mp4"/>
+                </video>
                 <Grid container spacing={0}>
-                    <Grid item xs={12}>
-                        <Grid container justify="center" spacing={0}>
-                            <H3Title>The Great N-queens Game!</H3Title>
-                            <BoardView board={this.state.board}/>
-                        </Grid>
+                    <Grid container item xs={12} sm={6}>
+                        <DivExpandingContainer>
+                            <DivCentrifyContainer>
+                                <Board board={this.viewModel.getBoard()}/>
+                            </DivCentrifyContainer>
+                        </DivExpandingContainer>
+                    </Grid>
+                    <Grid container item xs={12} sm={6}>
+                        <DivExpandingContainer>
+                            <DivCentrifyContainer>
+                                <Grid container
+                                      direction="column"
+                                      justify="center"
+                                      alignItems="flex-start"
+                                      spacing={1}>
+                                    <Grid item>
+                                        <H3Title>The Great N-queens Game!</H3Title>
+                                        <Chat value={this.viewModel.logs} onChange={this.viewModel.onChangeLogs}/>
+                                    </Grid>
+                                    <Grid item>{this.viewModel.isAutomatic
+                                        ? <ButtonRegime type="button" onClick={(): void => this.viewModel.onClick()}>Automatic 👻</ButtonRegime>
+                                        : (<React.Fragment>
+                                            <ButtonRegime type="button" onClick={(): void => this.viewModel.onClick()}> Manual 🛠</ButtonRegime>
+                                            <ButtonNext type="button" onClick={(): void => this.viewModel.onClick()}>Next ➞</ButtonNext>
+                                        </React.Fragment>)}
+
+                                    </Grid>
+                                </Grid>
+                            </DivCentrifyContainer>
+                        </DivExpandingContainer>
                     </Grid>
                 </Grid>
-            </DivBackground>
+            </DivBackgroundContainer>
         </React.Fragment>);
     }
 }

@@ -3,7 +3,7 @@ import * as H from "history";
 import { Switch, Route } from "react-router";
 
 import BoardHolder from "../../modules/game/domain/entity/models/BoardHolder";
-import MovementFakeApi from "../../modules/game/data/MovementFakeApi";
+import MotionFakeApi from "../../modules/game/data/MotionFakeApi";
 
 import GameView from '../../modules/game/presentation/view/Game/index';
 import MovementUseCase from "../../modules/game/domain/interactors/MovementUseCase";
@@ -15,7 +15,7 @@ interface GameRouterProps {
 
 const GameRouter = (props: GameRouterProps) => {
     // data layer
-    const movementRepository = new MovementFakeApi();
+    const movementRepository = new MotionFakeApi();
 
     // domain layer
     const boardHolder = new BoardHolder();
