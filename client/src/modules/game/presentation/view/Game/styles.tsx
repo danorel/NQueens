@@ -32,7 +32,7 @@ export const DivBackgroundContainer = styled.div`
     // Background resizing options
     background: url(${jpgBackgroundImage}) no-repeat center center fixed;
     -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+       -moz-background-size: cover;
+         -o-background-size: cover;
+            background-size: cover;
 `;
