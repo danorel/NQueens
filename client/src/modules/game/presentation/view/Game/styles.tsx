@@ -6,8 +6,18 @@ export const H3Title = styled.h3`
     font-size: 32px;
     margin: 0 0 15px;
     font-style: normal;
-    color: #151515;
+    color: #69ff79;
 `;
+
+export const ButtonRegime = styled.button`
+    width: 120px;
+    padding: 5px 20px;
+    font-size: 16px;
+    font-family: "Comic Sans MS", sans-serif;
+    border-radius: 12px;
+    color: #000f00;
+    background-color: #69ff79;
+`
 
 export const DivCentrifyContainer = styled.div`
     top: 50%;

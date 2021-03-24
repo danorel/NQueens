@@ -8,6 +8,7 @@ import GameViewModel from "../../view-model/Game";
 
 import {
     H3Title,
+    ButtonRegime,
     DivExpandingContainer,
     DivCentrifyContainer,
     DivBackgroundContainer,
@@ -68,8 +69,24 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
                     <Grid container item xs={12} sm={6}>
                         <DivExpandingContainer>
                             <DivCentrifyContainer>
-                                <H3Title>The Great N-queens Game!</H3Title>
-                                <Chat value={this.viewModel.logs} onChange={this.viewModel.onChangeLogs}/>
+                                <Grid container
+                                      direction="column"
+                                      justify="center"
+                                      alignItems="center"
+                                      spacing={1}>
+                                    <Grid item>
+                                        <H3Title>The Great N-queens Game!</H3Title>
+                                        <Chat value={this.viewModel.logs} onChange={this.viewModel.onChangeLogs}/>
+                                    </Grid>
+                                    <Grid item>
+                                        <ButtonRegime
+                                            onClick={this.viewModel.onClick}>
+                                            {this.viewModel.isAutomatic
+                                                ? "Automatic"
+                                                : "Manual"}
+                                        </ButtonRegime>
+                                    </Grid>
+                                </Grid>
                             </DivCentrifyContainer>
                         </DivExpandingContainer>
                     </Grid>
