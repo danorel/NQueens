@@ -6,8 +6,31 @@ export const H3Title = styled.h3`
     font-size: 32px;
     margin: 0 0 15px;
     font-style: normal;
-    color: #151515;
+    color: #69ff79;
 `;
+
+export const ButtonRegime = styled.button`
+    width: 150px;
+    height: 40px;
+    padding: 5px 20px;
+    font-size: 16px;
+    font-family: "Comic Sans MS", sans-serif;
+    border-radius: 12px;
+    color: #000f00;
+    background-color: #69ff79;
+`
+
+export const ButtonNext = styled.button`
+    margin-left: 5px;
+    width: 120px;
+    height: 40px;
+    padding: 5px 20px;
+    font-size: 16px;
+    font-family: "Comic Sans MS", sans-serif;
+    border-radius: 12px;
+    color: #000f00;
+    background-color: #69ff79;
+`
 
 export const DivCentrifyContainer = styled.div`
     top: 50%;
@@ -32,7 +55,7 @@ export const DivBackgroundContainer = styled.div`
     // Background resizing options
     background: url(${jpgBackgroundImage}) no-repeat center center fixed;
     -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+       -moz-background-size: cover;
+         -o-background-size: cover;
+            background-size: cover;
 `;

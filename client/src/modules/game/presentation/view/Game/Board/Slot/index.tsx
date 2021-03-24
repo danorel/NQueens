@@ -1,6 +1,6 @@
 import React from 'react';
 
-import svgQueen from '../../../../../../../public/images/svg/queen.svg';
+import svgQueen from '../../../../../../../public/images/svg/queen-in-red.svg';
 
 import { DivImage, ImageQueen } from "./styles";
 
