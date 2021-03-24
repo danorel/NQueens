@@ -6,8 +6,8 @@ export const DivImage = styled.div`
   align-content: center;
   flex-direction: column;
   text-align: center;
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   font-size: 1.5em;
   color: #000f00;
   margin: 1px;
@@ -17,6 +17,6 @@ export const DivImage = styled.div`
 export const ImageQueen = styled.img`
   display: block;
   margin: auto;
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
 `;

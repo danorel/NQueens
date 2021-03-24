@@ -6,7 +6,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "development:client:local": "cd client && npm run start",
-        "development:server:local": "cd server && python3",
+        "development:server:local": "cd server && python3 index.py",
         "development:local": "concurrently \"npm run development:client:local\" \"npm run development:server:local\"",
         "development:docker": "docker-compose -f docker-compose.yml up"
     },
