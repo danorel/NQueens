@@ -80,10 +80,10 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
                                         <Chat value={this.viewModel.logs} onChange={this.viewModel.onChangeLogs}/>
                                     </Grid>
                                     <Grid item>{this.viewModel.isAutomatic
-                                        ? <ButtonRegime type="button" onClick={(): void => this.viewModel.onClick()}>Automatic 👻</ButtonRegime>
+                                        ? <ButtonRegime type="button" onClick={(): void => this.viewModel.onClickRegime()}>Automatic 👻</ButtonRegime>
                                         : (<React.Fragment>
-                                            <ButtonRegime type="button" onClick={(): void => this.viewModel.onClick()}> Manual 🛠</ButtonRegime>
-                                            <ButtonNext type="button" onClick={(): void => this.viewModel.onClick()}>Next ➞</ButtonNext>
+                                            <ButtonRegime type="button" onClick={(): void => this.viewModel.onClickRegime()}> Manual 🛠</ButtonRegime>
+                                            <ButtonNext type="button" onClick={(): Promise<void> => this.viewModel.onClickNext()}>Next ➞</ButtonNext>
                                         </React.Fragment>)}
 
                                     </Grid>

@@ -9,7 +9,7 @@ export default class MotionFakeApi implements MovementRepository {
     moveManual(): Promise<MovementResponse> {
         return new Promise((resolve, reject) => {
             const mockResponse: { i: number, j: number } = {
-                i: 9,
+                i: 3,
                 j: 1,
             };
 
