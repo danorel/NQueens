@@ -14,7 +14,7 @@ export default class ScreenHolder implements ScreenActionListener, ScreenHandler
     }
 
     public println(log: string): void {
-        this._logs += log + "\n";
+        this._logs += "> " + log + "\n";
     }
 
     public clear(): void {
