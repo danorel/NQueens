@@ -4,5 +4,6 @@ export default interface Playable extends BaseViewModel {
     logs: string;
     isAutomatic: boolean;
 
-    onClick(): void;
+    onClickNext(): Promise<void>;
+    onClickRegime(): void;
 }

@@ -49,8 +49,13 @@ export default class GameViewModel implements Playable, BoardListener {
         this.view = undefined;
     }
 
-    public onClick(): void {
+    public onClickRegime(): void {
         this.isAutomatic = !this.isAutomatic;
+        this.notifyView();
+    }
+
+    public async onClickNext(): Promise<void> {
+        await this.movementUseCase.makeMoveManual();
         this.notifyView();
     }
 

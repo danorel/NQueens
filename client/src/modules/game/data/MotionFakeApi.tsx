@@ -1,20 +1,20 @@
 import MovementRepository from '../domain/repository/MovementRepository';
-import MovementResponse from '../domain/entity/structures/MovementResponse';
+import MotionResponse from '../domain/entity/structures/MotionResponse';
 
 export default class MotionFakeApi implements MovementRepository {
     /**
      * @throws {Error} if is automatic regime on
      * @throws {Error} if not valid move: index out of bounds
      */
-    moveManual(): Promise<MovementResponse> {
+    moveManual(): Promise<MotionResponse> {
         return new Promise((resolve, reject) => {
-            const mockResponse: { i: number, j: number } = {
-                i: 9,
-                j: 1,
+            const mockResponse: { x: number, y: number } = {
+                x: 3,
+                y: 1,
             };
 
-            if ((mockResponse.i < 0 || mockResponse.i > 7) ||
-                (mockResponse.j > 7 || mockResponse.j < 0)) {
+            if ((mockResponse.x < 0 || mockResponse.x > 7) ||
+                (mockResponse.y > 7 || mockResponse.y < 0)) {
                 reject(new Error('[Exception]: Index out of bounds!'));
                 return;
             }
@@ -27,15 +27,15 @@ export default class MotionFakeApi implements MovementRepository {
      * @throws {Error} if is manual regime on
      * @throws {Error} if not valid move: index out of bounds
      */
-    moveAutomatic(): Promise<MovementResponse> {
+    moveAutomatic(): Promise<MotionResponse> {
         return new Promise((resolve, reject) => {
-            const mockResponse: { i: number, j: number } = {
-                i: 3,
-                j: 5,
+            const mockResponse: { x: number, y: number } = {
+                x: 3,
+                y: 5,
             };
 
-            if ((mockResponse.i < 0 || mockResponse.i > 7) ||
-                (mockResponse.j > 7 || mockResponse.j < 0)) {
+            if ((mockResponse.x < 0 || mockResponse.x > 7) ||
+                (mockResponse.y > 7 || mockResponse.y < 0)) {
                 reject(new Error('[Exception]: Index out of bounds!'));
                 return;
             }
