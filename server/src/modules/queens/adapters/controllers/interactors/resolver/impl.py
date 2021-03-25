@@ -8,20 +8,28 @@ class NativeResolverController(AbstractResolverController):
     def __init__(self,
                  board_holder: Abstract2DBoardHolder,
                  constraint_controller: AbstractConstraintController):
-        self.__board_holder = board_holder
-        self.__constraint_controller = constraint_controller
+        self._board_holder = board_holder
+        self._constraint_controller = constraint_controller
 
     def search(self) -> MotionHolder:
-        move: MotionHolder = MotionHolder(0, 0)
-        found: bool = False
+        motions: [MotionHolder] = []
+        self._backtracking(motions, 0)
+        for motion in motions:
+            print(motion)
+        return motions[0]
 
-        for i in range(0, len(self.__board_holder.board())):
-            for j in range(0, len(self.__board_holder.board()[i])):
-                if self.__constraint_controller.valid_constraints(i, j):
-                    move = MotionHolder(i, j)
-                    found = True
-                    break
-            if found:
-                break
+    def _backtracking(self, motions: [MotionHolder], column) -> bool:
+        if column == len(self._board_holder.board()):
+            print("Found!")
+            return True
 
-        return move
+        for i in range(0, len(self._board_holder.board())):
+            if self._constraint_controller.valid_constraints(i, column):
+                motions.append(MotionHolder(i, column))
+
+                if self._backtracking(motions, column + 1):
+                    return True
+
+                motions.pop()
+
+        return False

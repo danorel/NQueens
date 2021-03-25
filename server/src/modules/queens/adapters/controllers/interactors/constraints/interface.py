@@ -11,21 +11,21 @@ class AbstractConstraintController(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def _constraint_diagonal(self, row: int, column: int):
+    def _valid_constraint_diagonals(self, row: int, column: int):
         pass
 
     @abc.abstractmethod
-    def _constraint_forward_diagonal(self, row: int, column: int):
+    def _valid_constraint_forward_diagonal(self, row: int, column: int):
         pass
 
     @abc.abstractmethod
-    def _constraint_backward_diagonal(self, row: int, column: int):
+    def _valid_constraint_backward_diagonal(self, row: int, column: int):
         pass
 
     @abc.abstractmethod
-    def _constraint_row(self, row: int):
+    def _valid_constraint_row(self, row: int):
         pass
 
     @abc.abstractmethod
-    def _constraint_column(self, column: int):
+    def _valid_constraint_column(self, column: int):
         pass
