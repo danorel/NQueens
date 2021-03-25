@@ -1,14 +1,15 @@
+from .interface import Abstract2DMotionHolder
 
 
-class Motion:
+class MotionHolder(Abstract2DMotionHolder):
     def __init__(self, x, y):
         self.__x: int = x
         self.__y: int = y
 
-    def x(self):
+    def x(self) -> int:
         return self.__x
 
-    def y(self):
+    def y(self) -> int:
         return self.__y
 
     def __str__(self):
