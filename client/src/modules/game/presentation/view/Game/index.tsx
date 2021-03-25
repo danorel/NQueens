@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Grid } from "@material-ui/core";
 
-import Chat from "./Chat";
+import Chat from "./Screen";
 import Board from "./Board";
 import GameViewModel from "../../view-model/Game";
 
@@ -77,7 +77,7 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
                                       spacing={1}>
                                     <Grid item>
                                         <H3Title>The Great N-queens Game!</H3Title>
-                                        <Chat value={this.viewModel.logs} onChange={this.viewModel.onChangeLogs}/>
+                                        <Chat value={this.viewModel.getLogs()}/>
                                     </Grid>
                                     <Grid item>{this.viewModel.isAutomatic
                                         ? <ButtonRegime type="button" onClick={(): void => this.viewModel.onClickRegime()}>Automatic 👻</ButtonRegime>

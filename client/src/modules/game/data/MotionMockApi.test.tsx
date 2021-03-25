@@ -1,7 +1,7 @@
-import MovementRepository from '../domain/repository/MovementRepository';
+import MotionRepository from '../domain/repository/MotionRepository';
 import MotionResponse from '../domain/entity/structures/MotionResponse';
 
-export default class MotionFakeApi implements MovementRepository {
+export default class MotionMockApiTest implements MotionRepository {
     /**
      * @throws {Error} if is automatic regime on
      * @throws {Error} if not valid move: index out of bounds

@@ -1,4 +1,7 @@
 export default interface MotionResponse {
-    x: number,
-    y: number
+    move: {
+        x: number,
+        y: number
+    },
+    log: string
 }

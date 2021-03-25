@@ -1,1 +1,1 @@
-from ..modules.queens.api.router import *
+from ..modules.queens.api import *
