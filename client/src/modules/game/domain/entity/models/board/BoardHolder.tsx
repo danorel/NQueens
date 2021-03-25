@@ -1,19 +1,12 @@
-import BoardListener from "./BoardListener";
+import BoardListener, {
+    BoardActionListener,
+    BoardHandlerListener,
+} from "./BoardListener";
 
-import { BoardType } from "../../../types";
+import { BoardType } from "../../../../types";
 
-interface BoardOperationsListener {
-    clear(): void;
-    setQueen(i: number, j: number): void;
-}
+export default class BoardHolder implements BoardActionListener, BoardHandlerListener {
 
-interface BoardChangingListener {
-    addListener(listener: BoardListener): void;
-    removeListener(listener: BoardListener): void;
-    notifyAllListeners(): void;
-}
-
-export default class BoardHolder implements BoardOperationsListener, BoardChangingListener {
     private _board: BoardType;
     private _listeners: BoardListener[];
 
@@ -38,8 +31,8 @@ export default class BoardHolder implements BoardOperationsListener, BoardChangi
         }
     }
 
-    setQueen(i: number, j: number): void {
-        this._board[i][j] = 1;
+    set(x: number, y: number): void {
+        this._board[x][y] = 1;
     }
 
     public addListener(listener: BoardListener): void {

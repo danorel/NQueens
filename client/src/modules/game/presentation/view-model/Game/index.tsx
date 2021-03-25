@@ -1,45 +1,37 @@
-import React from "react";
-
-import BoardHolder from "../../../domain/entity/models/BoardHolder";
-import MovementUseCase from "../../../domain/interactors/MovementUseCase";
-import BoardListener from "../../../domain/entity/models/BoardListener";
+import GameHolder from "../../../domain/entity/models/game/GameHolder";
+import GameListener from "../../../domain/entity/models/game/GameListener";
+import MotionUseCase from "../../../domain/interactors/MotionUseCase";
 
 import GameView from "../../view/Game";
-import Playable from "./Playable";
+import GameActionListener from "./ActionListener";
 
 import { BoardType } from "../../../types";
 
-export default class GameViewModel implements Playable, BoardListener {
+export default class GameViewModel implements GameActionListener, GameListener {
 
     public view?: GameView;
-    public holder: BoardHolder;
-    public movementUseCase: MovementUseCase;
+    public holder: GameHolder;
+    public motionUseCase: MotionUseCase;
 
-    public logs: string;
     public isAutomatic: boolean;
 
-    constructor(movementUseCase: MovementUseCase, holder: BoardHolder, isAutomatic: boolean = false) {
+    constructor(motionUseCase: MotionUseCase, holder: GameHolder, isAutomatic: boolean = false) {
         this.holder = holder;
-        this.movementUseCase = movementUseCase;
         this.holder.addListener(this);
+        this.motionUseCase = motionUseCase;
         // Data fields
-        this.logs = '';
         this.isAutomatic = isAutomatic;
     }
 
-    public onBoardChanged(): void {
-        throw new Error("Method not implemented.");
+    public onGameChanged(): void {
+        if (this.isAutomatic && !this.getLogs())
+            this.holder.screen.println("Hello! Please press Next to start the algorithm.");
     }
 
     private notifyView = (): void => {
         if (this.view)
             this.view.interact();
     };
-
-    public onChangeLogs = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
-        this.logs = event.target.value;
-        this.notifyView();
-    }
 
     public attachView(baseView: GameView): void {
         this.view = baseView;
@@ -55,11 +47,15 @@ export default class GameViewModel implements Playable, BoardListener {
     }
 
     public async onClickNext(): Promise<void> {
-        await this.movementUseCase.makeMoveManual();
+        await this.motionUseCase.makeMoveManual();
         this.notifyView();
     }
 
+    public getLogs(): string {
+        return this.holder.screen.logs;
+    }
+
     public getBoard(): BoardType {
-        return this.holder.board;
+        return this.holder.board.board;
     }
 }
