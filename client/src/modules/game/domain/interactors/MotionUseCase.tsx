@@ -16,7 +16,8 @@ export default class MotionUseCase {
      */
     public async makeMoveManual(): Promise<void> {
         const response: MotionResponse = await this.repository.moveManual(this.holder.board.board);
-        this.holder.board.set(response.move.x, response.move.y);
+        if (response.move)
+            this.holder.board.set(response.move.x, response.move.y);
         this.holder.screen.println(response.log)
     }
 
@@ -25,7 +26,8 @@ export default class MotionUseCase {
      */
     public async makeMoveAutomatic(): Promise<void> {
         const response: MotionResponse = await this.repository.moveAutomatic(this.holder.board.board);
-        this.holder.board.set(response.move.x, response.move.y);
+        if (response.move)
+            this.holder.board.set(response.move.x, response.move.y);
         this.holder.screen.println(response.log)
     }
 }

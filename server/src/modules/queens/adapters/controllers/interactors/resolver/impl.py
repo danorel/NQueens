@@ -1,35 +1,42 @@
-from .....domain.entity.models.board.interface import Abstract2DBoardHolder
-from .....domain.entity.models.motion.impl import MotionHolder
+import copy
+
 from ..constraints.interface import AbstractConstraintController
 from .....adapters.controllers.interactors.resolver.interface import AbstractResolverController
+from .....domain.entity.structures.types import BoardType
 
 
 class NativeResolverController(AbstractResolverController):
-    def __init__(self,
-                 board_holder: Abstract2DBoardHolder,
-                 constraint_controller: AbstractConstraintController):
-        self._board_holder = board_holder
+    def __init__(self, constraint_controller: AbstractConstraintController):
         self._constraint_controller = constraint_controller
+        self.__collection = []
 
-    def search(self) -> MotionHolder:
-        motions: [MotionHolder] = []
-        self._backtracking(motions, 0)
-        for motion in motions:
-            print(motion)
-        return motions[0]
+    def search(self, board: BoardType) -> list:
+        self._backtracking(
+            board=copy.deepcopy(board),
+            column=0,
+            n=len(board))
 
-    def _backtracking(self, motions: [MotionHolder], column) -> bool:
-        if column == len(self._board_holder.board()):
-            print("Found!")
+        return self.__collection
+
+    def _backtracking(self, board: [[int]], column: int, n: int):
+        if column >= n:
             return True
 
-        for i in range(0, len(self._board_holder.board())):
-            if self._constraint_controller.valid_constraints(i, column):
-                motions.append(MotionHolder(i, column))
+        for i in range(len(board)):
+            if self._constraint_controller.valid_constraints(board, i, column):
+                board[i][column] = 1
 
-                if self._backtracking(motions, column + 1):
-                    return True
+                if column == n - 1:
+                    self.__memorize(board)
+                    board[i][column] = 0
+                    return
 
-                motions.pop()
+                self._backtracking(board, column + 1, n)  # Recursive call
 
-        return False
+                # Backtrack
+                board[i][column] = 0
+
+        return True
+
+    def __memorize(self, board: BoardType):
+        self.__collection.append(copy.deepcopy(board))

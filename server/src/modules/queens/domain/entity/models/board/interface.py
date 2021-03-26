@@ -7,6 +7,10 @@ class Abstract2DBoardHolder(abc.ABC):
     _board: BoardType
 
     @abc.abstractmethod
+    def init(self, board: BoardType):
+        pass
+
+    @abc.abstractmethod
     def board(self) -> BoardType:
         pass
 

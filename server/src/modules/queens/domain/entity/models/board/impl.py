@@ -6,5 +6,8 @@ class BoardHolder(Abstract2DBoardHolder):
     def __init__(self, board: BoardType):
         self.__board = board
 
+    def init(self, board: BoardType):
+        self.__board = board
+
     def board(self) -> BoardType:
         return self.__board
