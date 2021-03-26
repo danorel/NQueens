@@ -15,7 +15,7 @@ export default class MotionUseCase {
      * @throws {Error} if movement is not valid or have not passed
      */
     public async makeMoveManual(): Promise<void> {
-        const response: MotionResponse = await this.repository.moveManual(this.holder.board.board);
+        const response: MotionResponse = await this.repository.moveManual();
         if (response.move)
             this.holder.board.set(response.move.x, response.move.y);
         this.holder.screen.println(response.log)
@@ -25,7 +25,7 @@ export default class MotionUseCase {
      * @throws {Error} if movement is not valid or have not passed
      */
     public async makeMoveAutomatic(): Promise<void> {
-        const response: MotionResponse = await this.repository.moveAutomatic(this.holder.board.board);
+        const response: MotionResponse = await this.repository.moveAutomatic();
         if (response.move)
             this.holder.board.set(response.move.x, response.move.y);
         this.holder.screen.println(response.log)

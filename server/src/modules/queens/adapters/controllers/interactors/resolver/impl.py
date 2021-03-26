@@ -6,9 +6,10 @@ from .....domain.entity.structures.types import BoardType
 
 
 class NativeResolverController(AbstractResolverController):
+
     def __init__(self, constraint_controller: AbstractConstraintController):
+        self._collection = []
         self._constraint_controller = constraint_controller
-        self.__collection = []
 
     def search(self, board: BoardType) -> list:
         self._backtracking(
@@ -16,7 +17,7 @@ class NativeResolverController(AbstractResolverController):
             column=0,
             n=len(board))
 
-        return self.__collection
+        return self._collection
 
     def _backtracking(self, board: [[int]], column: int, n: int):
         if column >= n:
@@ -27,7 +28,7 @@ class NativeResolverController(AbstractResolverController):
                 board[i][column] = 1
 
                 if column == n - 1:
-                    self.__memorize(board)
+                    self._memorize(board)
                     board[i][column] = 0
                     return
 
@@ -38,5 +39,5 @@ class NativeResolverController(AbstractResolverController):
 
         return True
 
-    def __memorize(self, board: BoardType):
-        self.__collection.append(copy.deepcopy(board))
+    def _memorize(self, board: BoardType):
+        self._collection.append(copy.deepcopy(board))

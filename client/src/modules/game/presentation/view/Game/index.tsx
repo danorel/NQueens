@@ -39,18 +39,7 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
     }
 
     public componentWillMount() {
-        fetch('/api/v1/queens/init', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                board: this.viewModel.getBoard()
-            })
-        })
-            .then(response => response.json())
-            .then(json => console.log(json))
-            .catch(err => console.log(err));
+        (async () => await this.viewModel.onInitializeBoard())();
     }
 
     public componentDidMount() {
@@ -100,7 +89,6 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
                                             <ButtonRegime type="button" onClick={(): void => this.viewModel.onClickRegime()}> Manual 🛠</ButtonRegime>
                                             <ButtonNext type="button" onClick={(): Promise<void> => this.viewModel.onClickNext()}>Next ➞</ButtonNext>
                                         </React.Fragment>)}
-
                                     </Grid>
                                 </Grid>
                             </DivCentrifyContainer>

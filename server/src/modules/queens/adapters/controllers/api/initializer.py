@@ -1,4 +1,4 @@
-class QueensInitController:
+class QueensInitializerController:
     @staticmethod
     def post(request):
         """

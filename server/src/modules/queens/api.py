@@ -28,7 +28,7 @@ resolver_use_case = QueensResolverUseCase(
     resolver_controller=resolver_controller)
 
 
-class QueensInitRouter(Resource):
+class QueensInitializerRouter(Resource):
     @staticmethod
     def post() -> dict:
         body = QueensResolverController.post(request)
@@ -63,11 +63,13 @@ class QueensResolverRouter(Resource):
 
         if move is None:
             return {
+                'ok': False,
                 'move': None,
                 'log': 'Game has finished successfully! Press re-play to start again.'
             }
 
         return {
+            'ok': True,
             'move': {
                 'x': move.x(),
                 'y': move.y(),
@@ -76,5 +78,5 @@ class QueensResolverRouter(Resource):
         }
 
 
-api.add_resource(QueensInitRouter, '/api/v1/queens/init')
-api.add_resource(QueensResolverRouter, '/api/v1/queens/motion')
+api.add_resource(QueensResolverRouter, '/api/v1/queens/resolve')
+api.add_resource(QueensInitializerRouter, '/api/v1/queens/initialize')

@@ -6,19 +6,25 @@ import GameView from "../../view/Game";
 import GameActionListener from "./ActionListener";
 
 import { BoardType } from "../../../types";
+import InitializeUseCase from "../../../domain/interactors/InitializeUseCase";
 
 export default class GameViewModel implements GameActionListener, GameListener {
 
     public view?: GameView;
     public holder: GameHolder;
     public motionUseCase: MotionUseCase;
+    public initializeUseCase: InitializeUseCase;
 
     public isAutomatic: boolean;
 
-    constructor(motionUseCase: MotionUseCase, holder: GameHolder, isAutomatic: boolean = false) {
+    constructor(initializeUseCase: InitializeUseCase,
+                motionUseCase: MotionUseCase,
+                holder: GameHolder,
+                isAutomatic: boolean = false) {
         this.holder = holder;
         this.holder.addListener(this);
         this.motionUseCase = motionUseCase;
+        this.initializeUseCase = initializeUseCase;
         // Data fields
         this.isAutomatic = isAutomatic;
     }
@@ -39,6 +45,11 @@ export default class GameViewModel implements GameActionListener, GameListener {
 
     public detachView(): void {
         this.view = undefined;
+    }
+
+    public async onInitializeBoard(): Promise<void> {
+        await this.initializeUseCase.prepareBoard();
+        this.notifyView();
     }
 
     public onClickRegime(): void {
