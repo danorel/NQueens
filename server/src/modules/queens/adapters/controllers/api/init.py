@@ -1,4 +1,4 @@
-class QueensMotionController:
+class QueensInitController:
     @staticmethod
     def post(request):
         """

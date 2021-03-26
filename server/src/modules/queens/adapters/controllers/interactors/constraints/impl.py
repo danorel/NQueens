@@ -1,72 +1,80 @@
+from .....domain.entity.structures.types import BoardType
 from .......entities import prolog
 
-from .....domain.entity.models.board.interface import Abstract2DBoardHolder
 from .....adapters.controllers.interactors.constraints.interface import \
     AbstractConstraintController
 
 
 class NativeConstraintController(AbstractConstraintController):
-    def __init__(self, board_holder: Abstract2DBoardHolder):
-        self._board_holder = board_holder
 
-    def valid_constraints(self, row: int, column: int) -> bool:
-        if (not self._constraint_diagonal(row, column)) or (not self._constraint_row(row)) or (not self._constraint_column(column)):
-            return False
-        return True
+    @classmethod
+    def valid_constraints(cls, board: BoardType, row: int, column: int) -> bool:
+        if cls._valid_constraint_diagonals(board, row, column) and cls._valid_constraint_row(board, row) and cls._valid_constraint_column(board, column):
+            return True
 
-    def _constraint_diagonal(self, row: int, column: int) -> bool:
-        if not self._constraint_forward_diagonal(row, column) or not self._constraint_backward_diagonal(row, column):
-            return False
-        return True
+        return False
 
-    def _constraint_forward_diagonal(self, row: int, column: int) -> bool:
+    @classmethod
+    def _valid_constraint_diagonals(cls, board: BoardType, row: int, column: int) -> bool:
+        if cls._valid_constraint_forward_diagonal(board, row, column) and cls._valid_constraint_backward_diagonal(board, row, column):
+            return True
+
+        return False
+
+    @classmethod
+    def _valid_constraint_forward_diagonal(cls, board: BoardType, row: int, column: int) -> bool:
         # Check left part of diagonal
         i, j = row, column
-        while i != 0 and j != 0:
+        while i >= 0 and j >= 0:
+            if board[i][j] == 1:
+                return False
             i -= 1
             j -= 1
-            if self._board_holder.board()[i][j]:
-                return False
 
         # Check right part of diagonal
         i, j = row, column
-        while i != len(self._board_holder.board()) - 1 and j != len(self._board_holder.board()) - 1:
+        while i < len(board) and j < len(board):
+            if board[i][j] == 1:
+                return False
             i += 1
             j += 1
-            if self._board_holder.board()[i][j]:
-                return False
 
         return True
 
-    def _constraint_backward_diagonal(self, row: int, column: int) -> bool:
+    @classmethod
+    def _valid_constraint_backward_diagonal(cls, board: BoardType, row: int, column: int) -> bool:
         # Check left part of diagonal
         i, j = row, column
-        while i != 0 and j != len(self._board_holder.board()) - 1:
+        while i >= 0 and j < len(board):
+            if board[i][j] == 1:
+                return False
             i -= 1
             j += 1
-            if self._board_holder.board()[i][j]:
-                return False
 
         # Check right part of diagonal
         i, j = row, column
-        while i != len(self._board_holder.board()) - 1 and j != 0:
+        while i < len(board) and j >= 0:
+            if board[i][j] == 1:
+                return False
             i += 1
             j -= 1
-            if self._board_holder.board()[i][j]:
+
+        return True
+
+    @classmethod
+    def _valid_constraint_column(cls, board: BoardType, column: int) -> bool:
+        for j in range(0, len(board)):
+            if board[j][column] == 1:
                 return False
 
         return True
 
-    def _constraint_column(self, column: int) -> bool:
-        for j in range(0, len(self._board_holder.board())):
-            if self._board_holder.board()[j][column]:
+    @classmethod
+    def _valid_constraint_row(cls, board: BoardType, row: int) -> bool:
+        for i in range(0, len(board)):
+            if board[row][i] == 1:
                 return False
-        return True
 
-    def _constraint_row(self, row: int) -> bool:
-        for i in range(0, len(self._board_holder.board())):
-            if self._board_holder.board()[row][i]:
-                return False
         return True
 
 
@@ -74,7 +82,8 @@ class PrologConstraintController(AbstractConstraintController):
     def __init__(self, pl):
         self.__pl = pl
 
-    def valid_constraints(self, row: int, column: int):
+    @classmethod
+    def valid_constraints(cls, row: int, column: int):
         """
         prolog.consult(self.__pl)
         list(prolog.query("L=%s,sudoku(L)" % p, maxresult=1))
@@ -83,17 +92,22 @@ class PrologConstraintController(AbstractConstraintController):
         """
         pass
 
-    def _constraint_diagonal(self, row: int, column: int):
+    @classmethod
+    def _valid_constraint_diagonals(cls, row: int, column: int):
         pass
 
-    def _constraint_forward_diagonal(self, row: int, column: int):
+    @classmethod
+    def _valid_constraint_forward_diagonal(cls, row: int, column: int):
         pass
 
-    def _constraint_backward_diagonal(self, row: int, column: int):
+    @classmethod
+    def _valid_constraint_backward_diagonal(cls, row: int, column: int):
         pass
 
-    def _constraint_row(self, row: int):
+    @classmethod
+    def _valid_constraint_row(cls, row: int):
         pass
 
-    def _constraint_column(self, column: int):
+    @classmethod
+    def _valid_constraint_column(cls, column: int):
         pass
