@@ -13,6 +13,10 @@ class QueensIteratorUseCase:
         self.__index: int = 0
         self.__combination: list = []
 
+    def init_holder(self, combination_holder) -> None:
+        self._combination_holder = combination_holder
+        return None
+
     def next(self) -> (bool, bool, MotionHolder or None):
         """
         Find next motion from current solution.
