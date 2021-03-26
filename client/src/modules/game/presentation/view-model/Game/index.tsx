@@ -1,12 +1,14 @@
-import GameHolder from "../../../domain/entity/models/game/GameHolder";
 import GameListener from "../../../domain/entity/models/game/GameListener";
-import MotionUseCase from "../../../domain/interactors/MotionUseCase";
-
-import GameView from "../../view/Game";
 import GameActionListener from "./ActionListener";
 
-import { BoardType } from "../../../types";
+import GameView from "../../view/Game";
+
+import GameHolder from "../../../domain/entity/models/game/GameHolder";
+
+import MotionUseCase from "../../../domain/interactors/MotionUseCase";
 import InitializeUseCase from "../../../domain/interactors/InitializeUseCase";
+
+import { BoardType } from "../../../types";
 
 export default class GameViewModel implements GameActionListener, GameListener {
 
@@ -68,12 +70,27 @@ export default class GameViewModel implements GameActionListener, GameListener {
         this.notifyView();
     }
 
+    public async onResize(value: number | number[]): Promise<void> {
+        if (typeof value === 'number')
+            this.holder.board.setSize(value);
+        await this.onInit()
+        this.notifyView();
+    }
+
     public getLogs(): string {
         return this.holder.screen.logs;
     }
 
+    public getSize(): number {
+        return this.holder.board.size;
+    }
+
     public getBoard(): BoardType {
         return this.holder.board.board;
+    }
+
+    public getSwitch(): boolean {
+        return this.isAutomatic;
     }
 
     public getBoardState(): boolean {

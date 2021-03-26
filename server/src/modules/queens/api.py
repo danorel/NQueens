@@ -32,21 +32,15 @@ class QueensInitializerRouter(Resource):
     @staticmethod
     def post() -> dict:
         body = QueensResolverController.post(request)
+        board = body.get('board')
 
-        board_holder.init(board=body.get('board'))
+        board_holder.init(board=board)
         resolver_use_case.init_holder(board_holder)
-
-        if not combination_holder.collection():
-            combination_holder.init(collection=resolver_use_case.find())
-
-            return {
-                'ok': True,
-                'log': 'Hi, Neo! It\'s me, Morpheus... Let\'s dive into matrix.'
-            }
+        combination_holder.init(collection=resolver_use_case.find())
 
         return {
             'ok': True,
-            'log': 'I have a dejavu... Reloading the matrix...'
+            'log': f'Hi, Neo! You\'ve chosen to conquer the {len(board)}D matrix... Let\'s hack it!'
         }
 
 
