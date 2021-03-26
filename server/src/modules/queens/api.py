@@ -7,7 +7,6 @@ from .domain.entity.models.board.impl import BoardHolder
 from .domain.entity.models.combination.impl import CombinationHolder
 from .domain.interactors.resolver import QueensResolverUseCase
 from .domain.interactors.iterator import QueensIteratorUseCase
-from .adapters.controllers.api.init import QueensInitController
 from .adapters.controllers.api.resolver import QueensResolverController
 from .adapters.controllers.interactors.resolver.impl import NativeResolverController
 from .adapters.controllers.interactors.constraints.impl import NativeConstraintController
@@ -53,7 +52,6 @@ class QueensInitRouter(Resource):
 class QueensResolverRouter(Resource):
     @staticmethod
     def post() -> dict:
-        body = QueensInitController.post(request)
 
         if not combination_holder.collection():
             return {
@@ -62,7 +60,6 @@ class QueensResolverRouter(Resource):
             }
 
         move = iterator_use_case.next()
-        print(move)
 
         if move is None:
             return {
