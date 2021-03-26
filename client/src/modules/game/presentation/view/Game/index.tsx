@@ -2,15 +2,13 @@ import React from 'react';
 
 import {Grid} from "@material-ui/core";
 
+import Bar from "./Bar"
 import Chat from "./Screen";
 import Board from "./Board";
 import GameViewModel from "../../view-model/Game";
 
 import {
     H3Title,
-    ButtonNext,
-    ButtonRegime,
-    ButtonContinue,
     DivExpandingContainer,
     DivCentrifyContainer,
     DivBackgroundContainer,
@@ -84,41 +82,13 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
                                         <H3Title>The Great N-queens Game!</H3Title>
                                         <Chat value={this.viewModel.getLogs()}/>
                                     </Grid>
-                                    <Grid item>{this.viewModel.isAutomatic
-                                        ? <ButtonRegime type="button" onClick={(): void => this.viewModel.onSwitch()}>Automatic
-                                            👻</ButtonRegime>
-                                        : (<React.Fragment>
-                                            {!this.viewModel.getBoardState()
-                                                ? (<React.Fragment>
-                                                    <ButtonRegime type="button"
-                                                                  onClick={(): void => this.viewModel.onSwitch()}> Manual
-                                                        🛠</ButtonRegime>
-                                                    <ButtonNext type="button" disabled={this.viewModel.getBoardState()}
-                                                                onClick={(): Promise<void> => this.viewModel.onMove()}>Next
-                                                        🤌</ButtonNext>
-                                                </React.Fragment>)
-                                                : (<React.Fragment>
-                                                    <Grid container
-                                                          direction="row"
-                                                          justify="center"
-                                                          alignItems="center"
-                                                          spacing={2}>
-                                                        <Grid item>
-                                                            <ButtonRegime type="button"
-                                                                          onClick={(): void => this.viewModel.onSwitch()}> Manual
-                                                                🛠</ButtonRegime>
-                                                            <ButtonNext type="button" disabled={this.viewModel.getBoardState()}
-                                                                        onClick={(): Promise<void> => this.viewModel.onMove()}>Next
-                                                                🤌</ButtonNext>
-                                                        </Grid>
-                                                        <Grid item>
-                                                            <ButtonContinue type="button"
-                                                                            onClick={(): void => this.viewModel.onContinue()}>Agree
-                                                                📞</ButtonContinue>
-                                                        </Grid>
-                                                    </Grid>
-                                                </React.Fragment>)}
-                                        </React.Fragment>)}
+                                    <Grid item>
+                                        <Bar
+                                            isAutomatic={this.viewModel.isAutomatic}
+                                            isFull={this.viewModel.getBoardState()}
+                                            onClickPerform={(): Promise<void> => this.viewModel.onMove()}
+                                            onClickSwitch={(): void => this.viewModel.onSwitch()}
+                                            onClickContinue={(): void => this.viewModel.onContinue()}/>
                                     </Grid>
                                 </Grid>
                             </DivCentrifyContainer>

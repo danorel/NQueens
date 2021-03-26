@@ -9,34 +9,6 @@ export const H3Title = styled.h3`
     color: #69ff79;
 `;
 
-export const ButtonRegime = styled.button`
-    width: 150px;
-    height: 40px;
-    padding: 5px 20px;
-    font-size: 16px;
-    font-family: "Monospaced", sans-serif;
-    border-radius: 12px;
-    color: #000f00;
-    background-color: #2397ff;
-`
-
-export const ButtonNext = styled.button`
-    margin-left: 5px;
-    width: 120px;
-    height: 40px;
-    padding: 5px 20px;
-    font-size: 16px;
-    font-family: "Monospaced", sans-serif;
-    border-radius: 12px;
-    color: #000f00;
-    background-color: #ff6998;
-`
-
-export const ButtonContinue = styled(ButtonNext)`
-    color: #000f00;
-    background-color: #abffab;
-`
-
 export const DivCentrifyContainer = styled.div`
     top: 50%;
     position: absolute;
