@@ -12,9 +12,11 @@ import {
 
 interface BarProps {
     isFull: boolean;
+    isComplete: boolean;
     isAutomatic: boolean;
 
     onClickPerform(): Promise<void>;
+    onClickRestart(): Promise<void>;
     onClickSwitch(): void;
     onClickContinue(): void;
 }
@@ -34,9 +36,12 @@ const BarView = (props: BarProps) => {
                         👻</ButtonRegime>
                 </Grid>
                 <Grid item>
-                    <ButtonContinue type="button"
-                                    onClick={props.onClickContinue}>Agree
-                        📞</ButtonContinue>
+                    {props.isComplete
+                        ? <ButtonContinue type="button"
+                                          onClick={props.onClickRestart}>Restart 👻</ButtonContinue>
+                        : <ButtonContinue type="button"
+                                          onClick={props.onClickContinue}>Agree
+                            📞</ButtonContinue>}
                 </Grid>
             </Grid>
         </React.Fragment>);
@@ -65,9 +70,12 @@ const BarView = (props: BarProps) => {
                             🤌</ButtonNext>}
                 </Grid>
                 <Grid item>
-                    <ButtonContinue type="button"
-                                    onClick={props.onClickContinue}>Agree
-                        📞</ButtonContinue>
+                    {props.isComplete
+                        ? <ButtonContinue type="button"
+                                          onClick={props.onClickRestart}>Restart 👻</ButtonContinue>
+                        : <ButtonContinue type="button"
+                                          onClick={props.onClickContinue}>Agree
+                            📞</ButtonContinue>}
                 </Grid>
             </Grid>
         </React.Fragment>);

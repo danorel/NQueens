@@ -16,13 +16,15 @@ export default class MotionUseCase {
      */
     public async prepareMove(): Promise<void> {
         const response: MotionResponse = await this.repository.prepareMove();
+        console.log(response);
         if (response.move)
             this.holder.board.setPosition(response.move.x, response.move.y);
         if (response.done) {
             this.holder.board.setFull(response.done);
             this.holder.screen.println('Queen matrix resolved... We can search another solution, Neo! Agree?');
-        } else if (!response.exist)
+        } else if (!response.exist) {
+            this.holder.isComplete = true;
             this.holder.screen.println('Mission completed... Thank you, Neo, for finding all possible solutions!')
-        else this.holder.screen.println(response.log)
+        } else this.holder.screen.println(response.log)
     }
 }

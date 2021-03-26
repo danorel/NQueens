@@ -17,7 +17,11 @@ class NativeResolverController(AbstractResolverController):
             column=0,
             n=len(board))
 
-        return self._collection
+        # Erase the rest soltuions
+        collection = self._collection.copy()
+        self._collection = []
+
+        return collection
 
     def _backtracking(self, board: [[int]], column: int, n: int):
         if column >= n:

@@ -83,13 +83,15 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
                                     <Grid item>
                                         <H3Title>The Great N-queens Game!</H3Title>
                                         <Chat value={this.viewModel.getLogs()}/>
-                                        <SizeSlider disabled={!this.viewModel.getBoardState()}
+                                        <SizeSlider disabled={!this.viewModel.getStateFull()}
                                                     value={this.viewModel.getSize()}
                                                     onChange={(_: React.ChangeEvent<{}>, value: number | number[]): Promise<void> => this.viewModel.onResize(value)}/>
                                     </Grid>
                                     <Grid item>
-                                        <Bar isAutomatic={this.viewModel.getSwitch()}
-                                             isFull={this.viewModel.getBoardState()}
+                                        <Bar isFull={this.viewModel.getStateFull()}
+                                             isComplete={this.viewModel.getStateComplete()}
+                                             isAutomatic={this.viewModel.getStateSwitch()}
+                                             onClickRestart={(): Promise<void> => this.viewModel.onRestart()}
                                              onClickPerform={(): Promise<void> => this.viewModel.onMove()}
                                              onClickSwitch={(): void => this.viewModel.onSwitch()}
                                              onClickContinue={(): void => this.viewModel.onContinue()}/>

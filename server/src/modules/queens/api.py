@@ -37,7 +37,6 @@ class QueensInitializerRouter(Resource):
         board_holder.init(board=board)
         resolver_use_case.init_holder(board_holder)
         combination_holder.init(collection=resolver_use_case.find())
-        iterator_use_case.init_holder(combination_holder)
 
         return {
             'ok': True,

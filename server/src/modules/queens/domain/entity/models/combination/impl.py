@@ -11,8 +11,9 @@ class CombinationHolder(AbstractCombinationHolder):
         return None
 
     def next(self) -> list:
-        if self._collection:
-            self._latest = self._collection.pop()
+        if not self._collection:
+            return []
+        self._latest = self._collection.pop()
         return self._latest
 
     def collection(self) -> list:
