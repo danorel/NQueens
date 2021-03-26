@@ -47,18 +47,24 @@ export default class GameViewModel implements GameActionListener, GameListener {
         this.view = undefined;
     }
 
-    public async onInitializeBoard(): Promise<void> {
-        await this.initializeUseCase.prepareBoard();
-        this.notifyView();
-    }
-
-    public onClickRegime(): void {
+    public onSwitch(): void {
         this.isAutomatic = !this.isAutomatic;
         this.notifyView();
     }
 
-    public async onClickNext(): Promise<void> {
-        await this.motionUseCase.makeMoveManual();
+    public onContinue(): void {
+        this.holder.board.clear();
+        this.holder.board.setFull(false);
+        this.notifyView();
+    }
+
+    public async onInit(): Promise<void> {
+        await this.initializeUseCase.prepareBoard();
+        this.notifyView();
+    }
+
+    public async onMove(): Promise<void> {
+        await this.motionUseCase.prepareMove();
         this.notifyView();
     }
 
@@ -68,5 +74,9 @@ export default class GameViewModel implements GameActionListener, GameListener {
 
     public getBoard(): BoardType {
         return this.holder.board.board;
+    }
+
+    public getBoardState(): boolean {
+        return this.holder.board.full;
     }
 }

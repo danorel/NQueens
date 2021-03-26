@@ -7,11 +7,13 @@ import { BoardType } from "../../../../types";
 
 export default class BoardHolder implements BoardActionListener, BoardHandlerListener {
 
+    private _full: boolean;
     private _board: BoardType;
     private _listeners: BoardListener[];
 
     constructor() {
         this._listeners = [];
+        this._full = false;
         this._board = [
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
@@ -32,7 +34,11 @@ export default class BoardHolder implements BoardActionListener, BoardHandlerLis
         }
     }
 
-    set(x: number, y: number): void {
+    setFull(full: boolean): void {
+        this._full = full;
+    }
+
+    setPosition(x: number, y: number): void {
         this._board[x][y] = 1;
     }
 
@@ -51,5 +57,9 @@ export default class BoardHolder implements BoardActionListener, BoardHandlerLis
 
     get board(): BoardType {
         return this._board;
+    }
+
+    get full(): boolean {
+        return this._full;
     }
 }

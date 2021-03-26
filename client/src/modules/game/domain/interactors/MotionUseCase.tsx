@@ -14,20 +14,15 @@ export default class MotionUseCase {
     /**
      * @throws {Error} if movement is not valid or have not passed
      */
-    public async makeMoveManual(): Promise<void> {
-        const response: MotionResponse = await this.repository.moveManual();
+    public async prepareMove(): Promise<void> {
+        const response: MotionResponse = await this.repository.prepareMove();
         if (response.move)
-            this.holder.board.set(response.move.x, response.move.y);
-        this.holder.screen.println(response.log)
-    }
-
-    /**
-     * @throws {Error} if movement is not valid or have not passed
-     */
-    public async makeMoveAutomatic(): Promise<void> {
-        const response: MotionResponse = await this.repository.moveAutomatic();
-        if (response.move)
-            this.holder.board.set(response.move.x, response.move.y);
-        this.holder.screen.println(response.log)
+            this.holder.board.setPosition(response.move.x, response.move.y);
+        if (response.done) {
+            this.holder.board.setFull(response.done);
+            this.holder.screen.println('Queen matrix resolved... We can search another solution, Neo! Agree?');
+        } else if (!response.exist)
+            this.holder.screen.println('Mission completed... Thank you, Neo, for finding all possible solutions!')
+        else this.holder.screen.println(response.log)
     }
 }

@@ -4,5 +4,7 @@ export default interface MotionResponse {
         x: number,
         y: number
     },
+    done: boolean,
+    exist: boolean,
     log: string
 }

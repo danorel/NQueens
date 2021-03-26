@@ -14,10 +14,10 @@ export const ButtonRegime = styled.button`
     height: 40px;
     padding: 5px 20px;
     font-size: 16px;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Monospaced", sans-serif;
     border-radius: 12px;
     color: #000f00;
-    background-color: #69ff79;
+    background-color: #2397ff;
 `
 
 export const ButtonNext = styled.button`
@@ -26,10 +26,15 @@ export const ButtonNext = styled.button`
     height: 40px;
     padding: 5px 20px;
     font-size: 16px;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Monospaced", sans-serif;
     border-radius: 12px;
     color: #000f00;
-    background-color: #69ff79;
+    background-color: #ff6998;
+`
+
+export const ButtonContinue = styled(ButtonNext)`
+    color: #000f00;
+    background-color: #abffab;
 `
 
 export const DivCentrifyContainer = styled.div`

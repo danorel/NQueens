@@ -41,11 +41,12 @@ class QueensInitializerRouter(Resource):
 
             return {
                 'ok': True,
-                'log': 'Collection with queens combinations was generated successfully!'
+                'log': 'Hi, Neo! It\'s me, Morpheus... Let\'s dive into matrix.'
             }
 
         return {
-            'ok': True
+            'ok': True,
+            'log': 'I have a dejavu... Reloading the matrix...'
         }
 
 
@@ -55,21 +56,27 @@ class QueensResolverRouter(Resource):
 
         if not combination_holder.collection():
             return {
+                'ok': False,
                 'move': None,
-                'log': 'Server-side error! Define the collection firstly!'
+                'exist': False,
+                'log': 'Neo! The matrix is need to be reloaded.'
             }
 
-        move = iterator_use_case.next()
+        done, exist, move = iterator_use_case.next()
 
         if move is None:
             return {
                 'ok': False,
+                'done': False,
                 'move': None,
+                'exist': False,
                 'log': 'Game has finished successfully! Press re-play to start again.'
             }
 
         return {
             'ok': True,
+            'done': done,
+            'exist': exist,
             'move': {
                 'x': move.x(),
                 'y': move.y(),

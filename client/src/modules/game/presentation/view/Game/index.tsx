@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid } from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 
 import Chat from "./Screen";
 import Board from "./Board";
@@ -10,6 +10,7 @@ import {
     H3Title,
     ButtonNext,
     ButtonRegime,
+    ButtonContinue,
     DivExpandingContainer,
     DivCentrifyContainer,
     DivBackgroundContainer,
@@ -39,7 +40,7 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
     }
 
     public componentWillMount() {
-        (async () => await this.viewModel.onInitializeBoard())();
+        (async () => await this.viewModel.onInit())();
     }
 
     public componentDidMount() {
@@ -50,7 +51,7 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
         this.viewModel.detachView();
     }
 
-    public interact () {
+    public interact() {
         this.setState(prevState => ({
             ...prevState,
             isAutomatic: this.viewModel.isAutomatic,
@@ -84,10 +85,39 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
                                         <Chat value={this.viewModel.getLogs()}/>
                                     </Grid>
                                     <Grid item>{this.viewModel.isAutomatic
-                                        ? <ButtonRegime type="button" onClick={(): void => this.viewModel.onClickRegime()}>Automatic 👻</ButtonRegime>
+                                        ? <ButtonRegime type="button" onClick={(): void => this.viewModel.onSwitch()}>Automatic
+                                            👻</ButtonRegime>
                                         : (<React.Fragment>
-                                            <ButtonRegime type="button" onClick={(): void => this.viewModel.onClickRegime()}> Manual 🛠</ButtonRegime>
-                                            <ButtonNext type="button" onClick={(): Promise<void> => this.viewModel.onClickNext()}>Next ➞</ButtonNext>
+                                            {!this.viewModel.getBoardState()
+                                                ? (<React.Fragment>
+                                                    <ButtonRegime type="button"
+                                                                  onClick={(): void => this.viewModel.onSwitch()}> Manual
+                                                        🛠</ButtonRegime>
+                                                    <ButtonNext type="button" disabled={this.viewModel.getBoardState()}
+                                                                onClick={(): Promise<void> => this.viewModel.onMove()}>Next
+                                                        🤌</ButtonNext>
+                                                </React.Fragment>)
+                                                : (<React.Fragment>
+                                                    <Grid container
+                                                          direction="row"
+                                                          justify="center"
+                                                          alignItems="center"
+                                                          spacing={2}>
+                                                        <Grid item>
+                                                            <ButtonRegime type="button"
+                                                                          onClick={(): void => this.viewModel.onSwitch()}> Manual
+                                                                🛠</ButtonRegime>
+                                                            <ButtonNext type="button" disabled={this.viewModel.getBoardState()}
+                                                                        onClick={(): Promise<void> => this.viewModel.onMove()}>Next
+                                                                🤌</ButtonNext>
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <ButtonContinue type="button"
+                                                                            onClick={(): void => this.viewModel.onContinue()}>Agree
+                                                                📞</ButtonContinue>
+                                                        </Grid>
+                                                    </Grid>
+                                                </React.Fragment>)}
                                         </React.Fragment>)}
                                     </Grid>
                                 </Grid>

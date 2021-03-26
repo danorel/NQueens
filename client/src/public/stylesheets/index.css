@@ -6,7 +6,7 @@ html, body {
 }
 
 body {
-    font-family: 'Comic Sans MS', sans-serif;
+    font-family: 'Monospaced', sans-serif;
 }
 
 /* include border and padding in element width and height */
