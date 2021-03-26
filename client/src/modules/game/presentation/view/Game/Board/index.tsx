@@ -8,11 +8,26 @@ import { BoardDivContainer } from "./styles";
 
 import { BoardType } from "../../../../types";
 
+interface MatcherProps {
+    size: number;
+}
+
+const SizeMatcher = (props: MatcherProps): string => {
+    if (props.size <= 5)
+        return 'small';
+    if (props.size <= 8)
+        return 'medium';
+    return 'large';
+}
+
 interface BoardProps {
-    board: BoardType
+    size: number;
+    board: BoardType;
 }
 
 const BoardView = (props: BoardProps) => {
+    const size: string = SizeMatcher(props);
+
     return (<React.Fragment>
         <BoardDivContainer>
             <Grid container spacing={0}>
@@ -20,7 +35,7 @@ const BoardView = (props: BoardProps) => {
                     <Grid container justify="center" spacing={0}>
                         {props.board.map(((elements, index) => (
                             <Grid key={index} item>
-                                <Row elements={elements}/>
+                                <Row size={size} elements={elements}/>
                             </Grid>
                         )))}
                     </Grid>

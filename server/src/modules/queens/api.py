@@ -28,24 +28,19 @@ resolver_use_case = QueensResolverUseCase(
     resolver_controller=resolver_controller)
 
 
-class QueensInitRouter(Resource):
+class QueensInitializerRouter(Resource):
     @staticmethod
     def post() -> dict:
         body = QueensResolverController.post(request)
+        board = body.get('board')
 
-        board_holder.init(board=body.get('board'))
+        board_holder.init(board=board)
         resolver_use_case.init_holder(board_holder)
-
-        if not combination_holder.collection():
-            combination_holder.init(collection=resolver_use_case.find())
-
-            return {
-                'ok': True,
-                'log': 'Collection with queens combinations was generated successfully!'
-            }
+        combination_holder.init(collection=resolver_use_case.find())
 
         return {
-            'ok': True
+            'ok': True,
+            'log': f'Hi, Neo! You\'ve chosen to conquer the {len(board)}D matrix... Let\'s hack it!'
         }
 
 
@@ -55,19 +50,27 @@ class QueensResolverRouter(Resource):
 
         if not combination_holder.collection():
             return {
+                'ok': False,
                 'move': None,
-                'log': 'Server-side error! Define the collection firstly!'
+                'exist': False,
+                'log': 'Neo! The matrix is need to be reloaded.'
             }
 
-        move = iterator_use_case.next()
+        done, exist, move = iterator_use_case.next()
 
         if move is None:
             return {
+                'ok': False,
+                'done': False,
                 'move': None,
+                'exist': False,
                 'log': 'Game has finished successfully! Press re-play to start again.'
             }
 
         return {
+            'ok': True,
+            'done': done,
+            'exist': exist,
             'move': {
                 'x': move.x(),
                 'y': move.y(),
@@ -76,5 +79,5 @@ class QueensResolverRouter(Resource):
         }
 
 
-api.add_resource(QueensInitRouter, '/api/v1/queens/init')
-api.add_resource(QueensResolverRouter, '/api/v1/queens/motion')
+api.add_resource(QueensResolverRouter, '/api/v1/queens/resolve')
+api.add_resource(QueensInitializerRouter, '/api/v1/queens/initialize')

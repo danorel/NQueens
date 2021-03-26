@@ -3,6 +3,9 @@ import BaseViewModel from '../Base';
 export default interface GameActionListener extends BaseViewModel {
     isAutomatic: boolean;
 
-    onClickNext(): Promise<void>;
-    onClickRegime(): void;
+    onInit(): Promise<void>;
+    onMove(): Promise<void>;
+    onSwitch(): void;
+    onContinue(): void;
+    onResize(value: number | number[]): Promise<void>;
 }

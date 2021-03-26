@@ -1,6 +1,7 @@
 export interface BoardActionListener {
     clear(): void;
-    set(x: number, y: number): void;
+    setFull(full: boolean): void;
+    setPosition(x: number, y: number): void;
 }
 
 export interface BoardHandlerListener {

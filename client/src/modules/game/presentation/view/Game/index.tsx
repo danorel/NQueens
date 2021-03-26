@@ -2,14 +2,14 @@ import React from 'react';
 
 import { Grid } from "@material-ui/core";
 
+import Bar from "./Bar"
 import Chat from "./Screen";
 import Board from "./Board";
+import SizeSlider from "./Slider";
 import GameViewModel from "../../view-model/Game";
 
 import {
     H3Title,
-    ButtonNext,
-    ButtonRegime,
     DivExpandingContainer,
     DivCentrifyContainer,
     DivBackgroundContainer,
@@ -39,18 +39,7 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
     }
 
     public componentWillMount() {
-        fetch('/api/v1/queens/init', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                board: this.viewModel.getBoard()
-            })
-        })
-            .then(response => response.json())
-            .then(json => console.log(json))
-            .catch(err => console.log(err));
+        (async () => await this.viewModel.onInit())();
     }
 
     public componentDidMount() {
@@ -61,7 +50,7 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
         this.viewModel.detachView();
     }
 
-    public interact () {
+    public interact() {
         this.setState(prevState => ({
             ...prevState,
             isAutomatic: this.viewModel.isAutomatic,
@@ -78,7 +67,8 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
                     <Grid container item xs={12} sm={6}>
                         <DivExpandingContainer>
                             <DivCentrifyContainer>
-                                <Board board={this.viewModel.getBoard()}/>
+                                <Board size={this.viewModel.getSize()}
+                                       board={this.viewModel.getBoard()}/>
                             </DivCentrifyContainer>
                         </DivExpandingContainer>
                     </Grid>
@@ -93,14 +83,15 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
                                     <Grid item>
                                         <H3Title>The Great N-queens Game!</H3Title>
                                         <Chat value={this.viewModel.getLogs()}/>
+                                        <SizeSlider value={this.viewModel.getSize()}
+                                                    onChange={(_: React.ChangeEvent<{}>, value: number | number[]): Promise<void> => this.viewModel.onResize(value)}/>
                                     </Grid>
-                                    <Grid item>{this.viewModel.isAutomatic
-                                        ? <ButtonRegime type="button" onClick={(): void => this.viewModel.onClickRegime()}>Automatic 👻</ButtonRegime>
-                                        : (<React.Fragment>
-                                            <ButtonRegime type="button" onClick={(): void => this.viewModel.onClickRegime()}> Manual 🛠</ButtonRegime>
-                                            <ButtonNext type="button" onClick={(): Promise<void> => this.viewModel.onClickNext()}>Next ➞</ButtonNext>
-                                        </React.Fragment>)}
-
+                                    <Grid item>
+                                        <Bar isAutomatic={this.viewModel.getSwitch()}
+                                             isFull={this.viewModel.getBoardState()}
+                                             onClickPerform={(): Promise<void> => this.viewModel.onMove()}
+                                             onClickSwitch={(): void => this.viewModel.onSwitch()}
+                                             onClickContinue={(): void => this.viewModel.onContinue()}/>
                                     </Grid>
                                 </Grid>
                             </DivCentrifyContainer>

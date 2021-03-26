@@ -13,4 +13,4 @@ class MotionHolder(Abstract2DMotionHolder):
         return self.__y
 
     def __str__(self):
-        return f"move<{self.__x},{self.__y}>"
+        return f"Move<{self.__x},{self.__y}>"

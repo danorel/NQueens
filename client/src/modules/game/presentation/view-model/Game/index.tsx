@@ -1,9 +1,12 @@
-import GameHolder from "../../../domain/entity/models/game/GameHolder";
 import GameListener from "../../../domain/entity/models/game/GameListener";
-import MotionUseCase from "../../../domain/interactors/MotionUseCase";
+import GameActionListener from "./ActionListener";
 
 import GameView from "../../view/Game";
-import GameActionListener from "./ActionListener";
+
+import GameHolder from "../../../domain/entity/models/game/GameHolder";
+
+import MotionUseCase from "../../../domain/interactors/MotionUseCase";
+import InitializeUseCase from "../../../domain/interactors/InitializeUseCase";
 
 import { BoardType } from "../../../types";
 
@@ -12,13 +15,18 @@ export default class GameViewModel implements GameActionListener, GameListener {
     public view?: GameView;
     public holder: GameHolder;
     public motionUseCase: MotionUseCase;
+    public initializeUseCase: InitializeUseCase;
 
     public isAutomatic: boolean;
 
-    constructor(motionUseCase: MotionUseCase, holder: GameHolder, isAutomatic: boolean = false) {
+    constructor(initializeUseCase: InitializeUseCase,
+                motionUseCase: MotionUseCase,
+                holder: GameHolder,
+                isAutomatic: boolean = false) {
         this.holder = holder;
         this.holder.addListener(this);
         this.motionUseCase = motionUseCase;
+        this.initializeUseCase = initializeUseCase;
         // Data fields
         this.isAutomatic = isAutomatic;
     }
@@ -41,13 +49,31 @@ export default class GameViewModel implements GameActionListener, GameListener {
         this.view = undefined;
     }
 
-    public onClickRegime(): void {
+    public onSwitch(): void {
         this.isAutomatic = !this.isAutomatic;
         this.notifyView();
     }
 
-    public async onClickNext(): Promise<void> {
-        await this.motionUseCase.makeMoveManual();
+    public onContinue(): void {
+        this.holder.board.clear();
+        this.holder.board.setFull(false);
+        this.notifyView();
+    }
+
+    public async onInit(): Promise<void> {
+        await this.initializeUseCase.prepareBoard();
+        this.notifyView();
+    }
+
+    public async onMove(): Promise<void> {
+        await this.motionUseCase.prepareMove();
+        this.notifyView();
+    }
+
+    public async onResize(value: number | number[]): Promise<void> {
+        if (typeof value === 'number')
+            this.holder.board.setSize(value);
+        await this.onInit()
         this.notifyView();
     }
 
@@ -55,7 +81,19 @@ export default class GameViewModel implements GameActionListener, GameListener {
         return this.holder.screen.logs;
     }
 
+    public getSize(): number {
+        return this.holder.board.size;
+    }
+
     public getBoard(): BoardType {
         return this.holder.board.board;
+    }
+
+    public getSwitch(): boolean {
+        return this.isAutomatic;
+    }
+
+    public getBoardState(): boolean {
+        return this.holder.board.full;
     }
 }
