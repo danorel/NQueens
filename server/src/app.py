@@ -1,4 +1,5 @@
 from .entities.flask import app
+from .entities.prolog import *
 from .api.router import *
 
 

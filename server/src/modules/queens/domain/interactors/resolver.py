@@ -17,4 +17,3 @@ class QueensResolverUseCase:
 
     def find(self) -> list:
         return self._resolver_controller.search(self._board_holder.board())
-

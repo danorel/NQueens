@@ -6,23 +6,31 @@ from ...entities.flask import api
 from .domain.entity.models.board.impl import BoardHolder
 from .domain.entity.models.combination.impl import CombinationHolder
 from .domain.interactors.resolver import QueensResolverUseCase
-from .domain.interactors.iterator import QueensIteratorUseCase
 from .adapters.controllers.api.resolver import QueensResolverController
+
+from .domain.interactors.iterator.impl import PrologQueensIteratorUseCase
+from .adapters.controllers.interactors.resolver.impl import PrologResolverController
+from .adapters.controllers.interactors.constraints.impl import PrologConstraintController
+
+from .domain.interactors.iterator.impl import NativeQueensIteratorUseCase
 from .adapters.controllers.interactors.resolver.impl import NativeResolverController
 from .adapters.controllers.interactors.constraints.impl import NativeConstraintController
 
-
 # Domain level
-combination_holder = CombinationHolder()
 board_holder = BoardHolder(board=[])
+combination_holder = CombinationHolder()
 
 # Adapter level
-constraint_controller = NativeConstraintController()
-resolver_controller = NativeResolverController(constraint_controller)
+constraint_controller = PrologConstraintController()
+resolver_controller = PrologResolverController(constraint_controller)
+# constraint_controller = NativeConstraintController()
+# resolver_controller = NativeResolverController(constraint_controller)
 
 # Interactor level
-iterator_use_case = QueensIteratorUseCase(
+iterator_use_case = PrologQueensIteratorUseCase(
     combination_holder=combination_holder)
+# iterator_use_case = NativeQueensIteratorUseCase(
+#     combination_holder=combination_holder)
 resolver_use_case = QueensResolverUseCase(
     board_holder=board_holder,
     resolver_controller=resolver_controller)

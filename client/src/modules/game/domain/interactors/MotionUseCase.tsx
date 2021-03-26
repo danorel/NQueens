@@ -16,7 +16,6 @@ export default class MotionUseCase {
      */
     public async prepareMove(): Promise<void> {
         const response: MotionResponse = await this.repository.prepareMove();
-        console.log(response);
         if (response.move)
             this.holder.board.setPosition(response.move.x, response.move.y);
         if (response.done) {

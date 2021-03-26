@@ -6,7 +6,7 @@ from .....adapters.controllers.interactors.constraints.interface import \
 
 
 class AbstractResolverController(abc.ABC):
-    _memorize_: list
+    _collection: list
     _constraint_controller: AbstractConstraintController
 
     @abc.abstractmethod
