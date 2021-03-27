@@ -8,7 +8,10 @@
         "development:client:local": "cd client && npm run start",
         "development:server:local": "cd server && python3 index.py",
         "development:local": "concurrently \"npm run development:client:local\" \"npm run development:server:local\"",
-        "development:docker": "docker-compose -f docker-compose.yml up"
+        "development:docker": "docker-compose -f docker-compose.yml up",
+        "prod:server:local": "cd server && pip install -r requirements.txt && python3 index.py",
+        "prod:client:local": "cd client && npm install && npm run start",
+        "prod:local": "concurrently \"npm run prod:server:local\" \"npm run prod:client:local\""
     },
     "repository": {
         "type": "git",
