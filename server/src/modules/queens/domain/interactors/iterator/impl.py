@@ -79,7 +79,6 @@ class PrologQueensIteratorUseCase(AbstractIteratorUseCase):
             self.__combination = self._combination_holder.next()
             exist = self.__combination is not None
 
-        # Extract row by row within combination
         element, self.__combination = self.__combination[0], self.__combination[1:]
 
         # Check if solution is ended

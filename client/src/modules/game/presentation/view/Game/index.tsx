@@ -28,10 +28,12 @@ export interface GameState {
 }
 
 class GameView extends React.Component<GameProps, GameState> implements GameStateControllable {
+    private interval: any;
     private viewModel: GameViewModel;
 
     constructor(props: GameProps) {
         super(props);
+        this.interval = null;
         this.viewModel = props.viewModel;
         this.state = {
             isAutomatic: this.viewModel.isAutomatic,
@@ -44,11 +46,23 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
 
     public componentDidMount() {
         this.viewModel.attachView(this);
+        setInterval(async () => {
+            if (this.viewModel.getStateSwitch() && !this.viewModel.getStateFull() && !this.viewModel.getStateComplete())
+                await this.viewModel.onMove();
+        }, 1000);
     }
 
     public componentWillUnmount() {
         this.viewModel.detachView();
+        clearInterval(this.interval);
     }
+
+    async componentDidUpdate(prevProps: GameProps, prevState: GameState) {
+        if (!prevState.isAutomatic) {
+
+        } else
+            clearInterval(this.interval);
+    };
 
     public interact() {
         this.setState(prevState => ({

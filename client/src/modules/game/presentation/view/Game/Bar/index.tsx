@@ -32,7 +32,7 @@ const BarView = (props: BarProps) => {
                   alignItems="center"
                   spacing={2}>
                 <Grid item>
-                    <ButtonRegime type="button" onClick={props.onClickContinue}>Automatic
+                    <ButtonRegime type="button" onClick={props.onClickSwitch}>Automatic
                         👻</ButtonRegime>
                 </Grid>
                 <Grid item>
@@ -48,7 +48,7 @@ const BarView = (props: BarProps) => {
 
     if (props.isAutomatic && !props.isFull)
         return (<React.Fragment>
-            <ButtonRegime type="button" onClick={props.onClickContinue}>Automatic
+            <ButtonRegime type="button" onClick={props.onClickSwitch}>Automatic
                 👻</ButtonRegime>
         </React.Fragment>);
 
