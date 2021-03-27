@@ -1,5 +1,6 @@
 from pyswip import Prolog
+from ..pl.dirs import resolver_path
 
 prolog = Prolog()
 
-prolog.consult("/Users/danorel/Workspace/World of Prolog/University/Game/Queens/server/src/pl/resolver.pl")
+prolog.consult(resolver_path)
