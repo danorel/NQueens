@@ -11,7 +11,7 @@
         "development:docker": "docker-compose -f docker-compose.yml up",
         "prod:server:local": "cd server && pip3 install -r requirements.txt && python3 index.py",
         "prod:client:local": "cd client && npm install && npm run start",
-        "prod:local": "apt install python3-pip && concurrently \"npm run prod:server:local\" \"npm run prod:client:local\""
+        "prod:local": "sudo apt install python3-pip && concurrently \"npm run prod:server:local\" \"npm run prod:client:local\""
     },
     "repository": {
         "type": "git",
