@@ -1,5 +1,4 @@
 from .....domain.entity.structures.types import BoardType
-from .......entities import prolog
 
 from .....adapters.controllers.interactors.constraints.interface import \
     AbstractConstraintController
@@ -79,35 +78,27 @@ class NativeConstraintController(AbstractConstraintController):
 
 
 class PrologConstraintController(AbstractConstraintController):
-    def __init__(self, pl):
-        self.__pl = pl
 
     @classmethod
-    def valid_constraints(cls, row: int, column: int):
-        """
-        prolog.consult(self.__pl)
-        list(prolog.query("L=%s,sudoku(L)" % p, maxresult=1))
-        for soln in prolog.query("father(X,Y)"):
-            print(soln["X"], "is the father of", soln["Y"])
-        """
-        pass
+    def valid_constraints(cls, board: BoardType, row: int, column: int):
+        return True
 
     @classmethod
-    def _valid_constraint_diagonals(cls, row: int, column: int):
-        pass
+    def _valid_constraint_diagonals(cls, board: BoardType, row: int, column: int):
+        return True
 
     @classmethod
-    def _valid_constraint_forward_diagonal(cls, row: int, column: int):
-        pass
+    def _valid_constraint_forward_diagonal(cls, board: BoardType, row: int, column: int):
+        return True
 
     @classmethod
-    def _valid_constraint_backward_diagonal(cls, row: int, column: int):
-        pass
+    def _valid_constraint_backward_diagonal(cls, board: BoardType, row: int, column: int):
+        return True
 
     @classmethod
-    def _valid_constraint_row(cls, row: int):
-        pass
+    def _valid_constraint_row(cls, board: BoardType, row: int):
+        return True
 
     @classmethod
-    def _valid_constraint_column(cls, column: int):
-        pass
+    def _valid_constraint_column(cls, board: BoardType, column: int):
+        return True

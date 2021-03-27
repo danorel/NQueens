@@ -54,6 +54,14 @@ export default class GameViewModel implements GameActionListener, GameListener {
         this.notifyView();
     }
 
+    public async onRestart(): Promise<void> {
+        this.holder.isComplete = false;
+        this.holder.board.clear();
+        this.holder.board.setFull(false);
+        await this.onInit();
+        this.notifyView();
+    }
+
     public onContinue(): void {
         this.holder.board.clear();
         this.holder.board.setFull(false);
@@ -89,11 +97,15 @@ export default class GameViewModel implements GameActionListener, GameListener {
         return this.holder.board.board;
     }
 
-    public getSwitch(): boolean {
+    public getStateSwitch(): boolean {
         return this.isAutomatic;
     }
 
-    public getBoardState(): boolean {
+    public getStateComplete(): boolean {
+        return this.holder.isComplete;
+    }
+
+    public getStateFull(): boolean {
         return this.holder.board.full;
     }
 }

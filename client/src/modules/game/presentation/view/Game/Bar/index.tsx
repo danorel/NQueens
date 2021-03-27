@@ -12,9 +12,11 @@ import {
 
 interface BarProps {
     isFull: boolean;
+    isComplete: boolean;
     isAutomatic: boolean;
 
     onClickPerform(): Promise<void>;
+    onClickRestart(): Promise<void>;
     onClickSwitch(): void;
     onClickContinue(): void;
 }
@@ -30,20 +32,23 @@ const BarView = (props: BarProps) => {
                   alignItems="center"
                   spacing={2}>
                 <Grid item>
-                    <ButtonRegime type="button" onClick={props.onClickContinue}>Automatic
+                    <ButtonRegime type="button" onClick={props.onClickSwitch}>Automatic
                         👻</ButtonRegime>
                 </Grid>
                 <Grid item>
-                    <ButtonContinue type="button"
-                                    onClick={props.onClickContinue}>Agree
-                        📞</ButtonContinue>
+                    {props.isComplete
+                        ? <ButtonContinue type="button"
+                                          onClick={props.onClickRestart}>Restart 👻</ButtonContinue>
+                        : <ButtonContinue type="button"
+                                          onClick={props.onClickContinue}>Agree
+                            📞</ButtonContinue>}
                 </Grid>
             </Grid>
         </React.Fragment>);
 
     if (props.isAutomatic && !props.isFull)
         return (<React.Fragment>
-            <ButtonRegime type="button" onClick={props.onClickContinue}>Automatic
+            <ButtonRegime type="button" onClick={props.onClickSwitch}>Automatic
                 👻</ButtonRegime>
         </React.Fragment>);
 
@@ -65,9 +70,12 @@ const BarView = (props: BarProps) => {
                             🤌</ButtonNext>}
                 </Grid>
                 <Grid item>
-                    <ButtonContinue type="button"
-                                    onClick={props.onClickContinue}>Agree
-                        📞</ButtonContinue>
+                    {props.isComplete
+                        ? <ButtonContinue type="button"
+                                          onClick={props.onClickRestart}>Restart 👻</ButtonContinue>
+                        : <ButtonContinue type="button"
+                                          onClick={props.onClickContinue}>Agree
+                            📞</ButtonContinue>}
                 </Grid>
             </Grid>
         </React.Fragment>);

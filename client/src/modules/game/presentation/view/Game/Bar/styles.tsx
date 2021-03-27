@@ -9,6 +9,7 @@ export const ButtonRegime = styled.button`
     border-radius: 12px;
     color: #000f00;
     background-color: #2397ff;
+    border: aliceblue 1px solid;
 `
 
 export const ButtonNext = styled.button`
@@ -20,7 +21,8 @@ export const ButtonNext = styled.button`
     font-family: "Monospaced", sans-serif;
     border-radius: 12px;
     color: #000f00;
-    background-color: #f3457d;
+    background-color: #ee3773;
+    border: aliceblue 1px solid;
 `
 
 export const ButtonNextDisabled = styled(ButtonNext)`

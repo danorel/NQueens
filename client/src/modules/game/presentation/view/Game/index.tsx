@@ -28,10 +28,12 @@ export interface GameState {
 }
 
 class GameView extends React.Component<GameProps, GameState> implements GameStateControllable {
+    private interval: any;
     private viewModel: GameViewModel;
 
     constructor(props: GameProps) {
         super(props);
+        this.interval = null;
         this.viewModel = props.viewModel;
         this.state = {
             isAutomatic: this.viewModel.isAutomatic,
@@ -44,11 +46,23 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
 
     public componentDidMount() {
         this.viewModel.attachView(this);
+        setInterval(async () => {
+            if (this.viewModel.getStateSwitch() && !this.viewModel.getStateFull() && !this.viewModel.getStateComplete())
+                await this.viewModel.onMove();
+        }, 1000);
     }
 
     public componentWillUnmount() {
         this.viewModel.detachView();
+        clearInterval(this.interval);
     }
+
+    async componentDidUpdate(prevProps: GameProps, prevState: GameState) {
+        if (!prevState.isAutomatic) {
+
+        } else
+            clearInterval(this.interval);
+    };
 
     public interact() {
         this.setState(prevState => ({
@@ -83,12 +97,15 @@ class GameView extends React.Component<GameProps, GameState> implements GameStat
                                     <Grid item>
                                         <H3Title>The Great N-queens Game!</H3Title>
                                         <Chat value={this.viewModel.getLogs()}/>
-                                        <SizeSlider value={this.viewModel.getSize()}
+                                        <SizeSlider disabled={!this.viewModel.getStateFull()}
+                                                    value={this.viewModel.getSize()}
                                                     onChange={(_: React.ChangeEvent<{}>, value: number | number[]): Promise<void> => this.viewModel.onResize(value)}/>
                                     </Grid>
                                     <Grid item>
-                                        <Bar isAutomatic={this.viewModel.getSwitch()}
-                                             isFull={this.viewModel.getBoardState()}
+                                        <Bar isFull={this.viewModel.getStateFull()}
+                                             isComplete={this.viewModel.getStateComplete()}
+                                             isAutomatic={this.viewModel.getStateSwitch()}
+                                             onClickRestart={(): Promise<void> => this.viewModel.onRestart()}
                                              onClickPerform={(): Promise<void> => this.viewModel.onMove()}
                                              onClickSwitch={(): void => this.viewModel.onSwitch()}
                                              onClickContinue={(): void => this.viewModel.onContinue()}/>

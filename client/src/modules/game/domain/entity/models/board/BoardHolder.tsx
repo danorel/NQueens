@@ -47,6 +47,9 @@ export default class BoardHolder implements BoardActionListener, BoardHandlerLis
     }
 
     setPosition(x: number, y: number): void {
+        if ((x < 0 || x >= this._size) || (y < 0 || y >= this._size))
+            return
+
         this._board[x][y] = 1;
     }
 
