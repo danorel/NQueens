@@ -12,7 +12,6 @@ filelock==3.0.12
 Flask==1.1.2
 Flask-RESTful==0.3.8
 idna==3.1
-imparaai-checkers==1.4.2
 importlib-metadata==3.7.3
 itsdangerous==1.1.0
 Jinja2==2.11.3
