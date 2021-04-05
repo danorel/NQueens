@@ -22,4 +22,14 @@ In such way you will launch simultaneously both of back-end and front-end code.
 This will completele install all required dependencies in all service and start the app in production mode.
 
 ### What is the code structure?
-1. **/server/src/pl/\*.pl** - all
+
+#### Back-end structure
+1. **/server/src/pl/\*.pl** - Prolog files with back-end logic. NQueens combinations and moves are generated here.
+2. **/server/src/api/\*.py** - Application routes with back-end endpoints.
+3. **/server/src/entities/\*.py** - Flask/Prolog library connnectivity.
+4. **/server/src/modules/\*.py** - Modules for applications.
+
+#### Front-end structure
+1. **/client/public/\*.(png|jpg|mp4)** - Public images, videos and other stuff, used in the application.
+2. **/client/src/modules/\*.(ts|tsx)** - Game components with view based on Domain-Driven Design.
+3. **/client/src/routes/\*.tsx** - Routes meant for web-game navigation.
