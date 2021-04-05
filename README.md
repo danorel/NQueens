@@ -44,3 +44,13 @@ Main components:
 - **prolog.query("n_queen(4,Y)")** - Query to prolog to get the results of the predicate. Y will contain the results.
 
 In such way I settled powerful Python-Prolog connectivity.
+
+### What I haven't done correctly?
+The program calculating NQueens with backtracking algorithm. It extracts all possible moves before runtime interpretation of the program.
+Is such case I cannot use the API in Runtime and inline in the POST/GET requests NQueen calculations for different sizes of desk.
+
+### What could be improved?
+- Find the way how to calculate the algorithm in Runtime.
+- Find the way how to get only current move of the queen, not all possible combinations of queen locations on the desk.
+
+Good luck!
